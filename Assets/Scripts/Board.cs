@@ -21,7 +21,9 @@ public class Board : MonoBehaviour
             for (int j = 0; j < height; j++)
             {
                 Vector2 tempPosition = new Vector2(i, j);
-                Instantiate(tilePrefab, tempPosition, Quaternion.identity);
+                GameObject backgroundTile =  Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
+                backgroundTile.transform.parent = this.transform; // Parent this backgroundTile GameObject to the Board object (to make it tidy in Hierarchy window)
+                backgroundTile.name = "( " + i + ", " + j + " )"; // Name the tiles with their grid position.
             }
         }
     }
