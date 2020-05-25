@@ -25,6 +25,7 @@ public class Dot : MonoBehaviour
         targetY = (int)transform.position.y;
         column = targetX;
         row = targetY;
+
     }
 
     // Update is called once per frame
@@ -86,13 +87,13 @@ public class Dot : MonoBehaviour
 
     void MovePieces()
     {
-        if (swipeAngle > -45 && swipeAngle <= 45 && column < board.width)
+        if (swipeAngle > -45 && swipeAngle <= 45 && column < board.width - 1)
         {
             // Right swipe
             otherDot = board.allDots[column + 1, row];
             otherDot.GetComponent<Dot>().column -=1;
             column += 1;
-        } else if (swipeAngle > 45 && swipeAngle <= 135 && row < board.height)
+        } else if (swipeAngle > 45 && swipeAngle <= 135 && row < board.height - 1)
         {
             // Up swipe
             otherDot = board.allDots[column, row + 1];
