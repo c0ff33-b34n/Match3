@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Dark Green Dot
+  - Green Dot
+  - Indigo Dot
+  - Orange Dot
+  - Red Dot
+  - Salmon Dot
+  - Teal Dot
+  - Yellow Dot
   layers:
   - Default
   - TransparentFX
