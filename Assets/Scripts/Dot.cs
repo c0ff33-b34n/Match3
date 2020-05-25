@@ -9,6 +9,8 @@ public class Dot : MonoBehaviour
     public int row;
     public int targetX;
     public int targetY;
+    public int originalColumn;
+    public int originalRow;
     public bool isMatched = false;
     private Board board;
     private GameObject otherDot;
@@ -25,7 +27,8 @@ public class Dot : MonoBehaviour
         targetY = (int)transform.position.y;
         column = targetX;
         row = targetY;
-
+        originalColumn = column;
+        originalRow = row;
     }
 
     // Update is called once per frame
@@ -68,6 +71,22 @@ public class Dot : MonoBehaviour
         }
     }
 
+    public IEnumerator CheckMoveCoroutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (otherDot != null)
+        {
+            if (!isMatched && !otherDot.GetComponent<Dot>().isMatched)
+            {
+                otherDot.GetComponent<Dot>().row = row;
+                otherDot.GetComponent<Dot>().column = column;
+                row = originalRow;
+                column = originalColumn;
+            }
+            otherDot = null;
+        }
+    }
+
     private void OnMouseDown()
     {
         firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -78,6 +97,7 @@ public class Dot : MonoBehaviour
         finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         CalculateAngle();
         MovePieces();
+        StartCoroutine(CheckMoveCoroutine());
     }
 
     void CalculateAngle()
