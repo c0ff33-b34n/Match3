@@ -25,12 +25,6 @@ public class Dot : MonoBehaviour
     void Start()
     {
         board = FindObjectOfType<Board>(); // there will only ever be one object of type Board.
-        targetX = (int)transform.position.x;
-        targetY = (int)transform.position.y;
-        column = targetX;
-        row = targetY;
-        originalColumn = column;
-        originalRow = row;
     }
 
     // Update is called once per frame
@@ -110,6 +104,8 @@ public class Dot : MonoBehaviour
         if (Mathf.Abs(finalTouchPosition.y - firstTouchPosition.y) > swipeResist ||
                 Mathf.Abs(finalTouchPosition.x - firstTouchPosition.x) > swipeResist)
         {
+            originalColumn = column;
+            originalRow = row;
             CalculateAngle();
             MovePieces();
             StartCoroutine(CheckMoveCoroutine());

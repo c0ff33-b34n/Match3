@@ -6,6 +6,7 @@ public class Board : MonoBehaviour
 {
     public int width;
     public int height;
+    public int offset;
     public GameObject tilePrefab;
     public GameObject[] dots;
     private BackgroundTile[,] allTiles;
@@ -25,7 +26,7 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                Vector2 tempPosition = new Vector2(i, j);
+                Vector2 tempPosition = new Vector2(i, j + offset);
                 GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
                 backgroundTile.transform.parent = this.transform; // Parent this backgroundTile GameObject to the Board object (to make it tidy in Hierarchy window)
                 backgroundTile.name = "( " + i + ", " + j + " )"; // Name the tiles with their grid position.
@@ -39,6 +40,8 @@ public class Board : MonoBehaviour
                 }
 
                 GameObject dot = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
+                dot.GetComponent<Dot>().column = i;
+                dot.GetComponent<Dot>().row = j;
                 dot.transform.parent = this.transform;
                 dot.name = "( " + i + ", " + j + " )"; // name dot tile with initial grid position.
                 allDots[i, j] = dot;
@@ -134,10 +137,12 @@ public class Board : MonoBehaviour
             {
                 if (allDots[i,j] == null)
                 {
-                    Vector2 tempPosition = new Vector2(i, j);
+                    Vector2 tempPosition = new Vector2(i, j + offset);
                     int dotToUse = Random.Range(0, dots.Length);
                     GameObject dot = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
                     allDots[i, j] = dot;
+                    dot.GetComponent<Dot>().column = i;
+                    dot.GetComponent<Dot>().row = j;
                 }
             }
         }
