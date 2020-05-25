@@ -18,6 +18,7 @@ public class Dot : MonoBehaviour
     private Vector2 finalTouchPosition;
     private Vector2 tempPosition;
     public float swipeAngle = 0;
+    public float swipeResist = 1f;
     
     // Start is called before the first frame update
     void Start()
@@ -95,9 +96,13 @@ public class Dot : MonoBehaviour
     private void OnMouseUp()
     {
         finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        CalculateAngle();
-        MovePieces();
-        StartCoroutine(CheckMoveCoroutine());
+        if (Mathf.Abs(finalTouchPosition.y - firstTouchPosition.y) > swipeResist ||
+                Mathf.Abs(finalTouchPosition.x - firstTouchPosition.x) > swipeResist)
+        {
+            CalculateAngle();
+            MovePieces();
+            StartCoroutine(CheckMoveCoroutine());
+        }        
     }
 
     void CalculateAngle()
