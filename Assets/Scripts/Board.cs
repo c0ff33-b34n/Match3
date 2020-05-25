@@ -2,8 +2,15 @@
 using System.IO;
 using UnityEngine;
 
+public enum GameState
+{
+    wait,
+    move
+}
+
 public class Board : MonoBehaviour
 {
+    public GameState currentGameState = GameState.wait;
     public int width;
     public int height;
     public int offset;
@@ -47,6 +54,7 @@ public class Board : MonoBehaviour
                 allDots[i, j] = dot;
             }
         }
+        currentGameState = GameState.move;
     }
 
     private bool MatchesAt(int column, int row, GameObject dot)
@@ -176,5 +184,8 @@ public class Board : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             DestroyMatches();
         }
+
+        yield return new WaitForSeconds(0.5f);
+        currentGameState = GameState.move;
     }
 }

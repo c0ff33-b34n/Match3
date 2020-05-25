@@ -85,6 +85,8 @@ public class Dot : MonoBehaviour
                 otherDot.GetComponent<Dot>().column = column;
                 row = originalRow;
                 column = originalColumn;
+                yield return new WaitForSeconds(0.5f);
+                board.currentGameState = GameState.move;
             } else
             {
                 board.DestroyMatches();
@@ -100,16 +102,19 @@ public class Dot : MonoBehaviour
 
     private void OnMouseUp()
     {
-        finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (Mathf.Abs(finalTouchPosition.y - firstTouchPosition.y) > swipeResist ||
-                Mathf.Abs(finalTouchPosition.x - firstTouchPosition.x) > swipeResist)
-        {
-            originalColumn = column;
-            originalRow = row;
-            CalculateAngle();
-            MovePieces();
-            StartCoroutine(CheckMoveCoroutine());
-        }        
+        if (board.currentGameState == GameState.move) { 
+            finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            if (Mathf.Abs(finalTouchPosition.y - firstTouchPosition.y) > swipeResist ||
+                    Mathf.Abs(finalTouchPosition.x - firstTouchPosition.x) > swipeResist)
+            {
+                board.currentGameState = GameState.wait;
+                originalColumn = column;
+                originalRow = row;
+                CalculateAngle();
+                MovePieces();
+                StartCoroutine(CheckMoveCoroutine());
+            }
+        }
     }
 
     void CalculateAngle()
