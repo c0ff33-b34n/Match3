@@ -83,6 +83,9 @@ public class Dot : MonoBehaviour
                 otherDot.GetComponent<Dot>().column = column;
                 row = originalRow;
                 column = originalColumn;
+            } else
+            {
+                board.DestroyMatches();
             }
             otherDot = null;
         }
