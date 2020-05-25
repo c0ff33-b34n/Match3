@@ -19,6 +19,7 @@ public class Dot : MonoBehaviour
     private Vector2 tempPosition;
     public float swipeAngle = 0;
     public float swipeResist = 1f;
+    public float lerpSpeed = 0.6f;
     
     // Start is called before the first frame update
     void Start()
@@ -48,27 +49,34 @@ public class Dot : MonoBehaviour
         {
             // Move toward the target
             tempPosition = new Vector2(targetX, transform.position.y);
-            transform.position = Vector2.Lerp(transform.position, tempPosition, 0.4f);
+            transform.position = Vector2.Lerp(transform.position, tempPosition, lerpSpeed);
+            if (board.allDots[column,row] != this.gameObject)
+            {
+                board.allDots[column, row] = this.gameObject;
+            }
         } else
         {
             // Directly set the position
             tempPosition = new Vector2(targetX, transform.position.y);
             transform.position = tempPosition;
-            board.allDots[column, row] = this.gameObject;
+            
         }
 
         if (Mathf.Abs(targetY - transform.position.y) > 0.1f)
         {
             // Move toward the target
             tempPosition = new Vector2(transform.position.x, targetY);
-            transform.position = Vector2.Lerp(transform.position, tempPosition, 0.4f);
+            transform.position = Vector2.Lerp(transform.position, tempPosition, lerpSpeed);
+            if (board.allDots[column, row] != this.gameObject)
+            {
+                board.allDots[column, row] = this.gameObject;
+            }
         }
         else
         {
             // Directly set the position
             tempPosition = new Vector2(transform.position.x, targetY);
             transform.position = tempPosition;
-            board.allDots[column, row] = this.gameObject;
         }
     }
 
