@@ -306,3 +306,5 @@ MonoBehaviour:
   - {fileID: 7730545180547189643, guid: e2def84c35c7eb54c86fe47113fbbb1c, type: 3}
   - {fileID: 245063127618914004, guid: aaa3f29234649f3439ef15f967f7e651, type: 3}
   - {fileID: 7204731248025574896, guid: f25f364f455cad440b24906bb799fc56, type: 3}
+  destroyEffect: {fileID: 7857476130259785411, guid: f9b8b0f529ee38642a4c5dd6e15669c0,
+    type: 3}
