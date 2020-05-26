@@ -18,12 +18,14 @@ public class Board : MonoBehaviour
     public GameObject[] dots;
     private BackgroundTile[,] allTiles;
     public GameObject[,] allDots;
+    private FindMatches findMatches;
 
     // Start is called before the first frame update
     void Start()
     {
         allTiles = new BackgroundTile[width, height];
         allDots = new GameObject[width, height];
+        findMatches = FindObjectOfType<FindMatches>();
         Setup();
     }
     
