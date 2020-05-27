@@ -22,12 +22,28 @@ public class Dot : MonoBehaviour
     public float swipeAngle = 0;
     public float swipeResist = 1f;
     public float lerpSpeed = 0.6f;
+    public bool isColumnBomb;
+    public bool isRowBomb;
+    public GameObject columnArrow;
+    public GameObject rowArrow;
     
     // Start is called before the first frame update
     void Start()
     {
+        isColumnBomb = false;
+        isRowBomb = false;
         board = FindObjectOfType<Board>(); // there will only ever be one object of type Board.
         findMatches = FindObjectOfType<FindMatches>();
+    }
+
+    private void OnMouseOver()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            isRowBomb = true;
+            GameObject arrow = Instantiate(rowArrow, transform.position, Quaternion.identity);
+            arrow.transform.parent = this.transform;
+        }
     }
 
     // Update is called once per frame

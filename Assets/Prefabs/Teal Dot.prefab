@@ -115,4 +115,14 @@ MonoBehaviour:
   row: 0
   targetX: 0
   targetY: 0
+  originalColumn: 0
+  originalRow: 0
+  isMatched: 0
   swipeAngle: 0
+  swipeResist: 1
+  lerpSpeed: 0.6
+  isColumnBomb: 0
+  isRowBomb: 0
+  columnArrow: {fileID: 4038403484614393687, guid: d7ec63f1151ad4b4dbe3dd56a5937ae9,
+    type: 3}
+  rowArrow: {fileID: 750344152607532662, guid: b0dccd057b0b10c44946e8ccb6dc6b78, type: 3}
