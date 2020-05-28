@@ -15,7 +15,7 @@ public class Dot : MonoBehaviour
 
     private FindMatches findMatches;
     private Board board;
-    private GameObject otherDot;
+    public GameObject otherDot;
     private Vector2 firstTouchPosition;
     private Vector2 finalTouchPosition;
     private Vector2 tempPosition;
@@ -24,14 +24,17 @@ public class Dot : MonoBehaviour
     public float lerpSpeed = 0.6f;
     public bool isColumnBomb;
     public bool isRowBomb;
+    public bool isColorBomb;
     public GameObject columnArrow;
     public GameObject rowArrow;
+    public GameObject colorBomb;
     
     // Start is called before the first frame update
     void Start()
     {
         isColumnBomb = false;
         isRowBomb = false;
+        isColorBomb = false;
         board = FindObjectOfType<Board>(); // there will only ever be one object of type Board.
         findMatches = FindObjectOfType<FindMatches>();
     }
@@ -40,21 +43,29 @@ public class Dot : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            isRowBomb = true;
-            GameObject arrow = Instantiate(rowArrow, transform.position, Quaternion.identity);
+            isColorBomb = true;
+            GameObject arrow = Instantiate(colorBomb, transform.position, Quaternion.identity);
             arrow.transform.parent = this.transform;
         }
+    }
+
+    public void MakeRowBomb()
+    {
+        isRowBomb = true;
+        GameObject arrow = Instantiate(rowArrow, transform.position, Quaternion.identity);
+        arrow.transform.parent = this.transform;
+    }
+
+    public void MakeColumnBomb()
+    {
+        isColumnBomb = true;
+        GameObject arrow = Instantiate(columnArrow, transform.position, Quaternion.identity);
+        arrow.transform.parent = this.transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isMatched)
-        {
-            SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
-            mySprite.color = new Color(1f, 1f, 1f, 0.2f);
-        }
-
         targetX = column;
         targetY = row;
         if (Mathf.Abs(targetX - transform.position.x) > 0.1f)
@@ -96,9 +107,21 @@ public class Dot : MonoBehaviour
 
     public IEnumerator CheckMoveCoroutine()
     {
+        if (isColorBomb)
+        {
+            findMatches.MatchesPiecesOfColor(otherDot.tag);
+            isMatched = true;
+        } else if (otherDot.GetComponent<Dot>().isColorBomb)
+        {
+            findMatches.MatchesPiecesOfColor(this.gameObject.tag);
+            otherDot.GetComponent<Dot>().isMatched = true;
+        }
+
+        board.currentDot = this;
         yield return new WaitForSeconds(0.5f);
         if (otherDot != null)
         {
+                
             if (!isMatched && !otherDot.GetComponent<Dot>().isMatched)
             {
                 otherDot.GetComponent<Dot>().row = row;
@@ -106,12 +129,13 @@ public class Dot : MonoBehaviour
                 row = originalRow;
                 column = originalColumn;
                 yield return new WaitForSeconds(0.5f);
+                board.currentDot = null;
                 board.currentGameState = GameState.move;
             } else
             {
                 board.DestroyMatches();
             }
-            otherDot = null;
+
         }
     }
 

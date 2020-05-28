@@ -159,4 +159,68 @@ public class FindMatches : MonoBehaviour
         }
         return dots;
     }
+
+    public void CheckBombs()
+    {
+        // Did the player move something?
+        if (board.currentDot != null)
+        {
+            // Is the piece moved matched?
+            if (board.currentDot.isMatched)
+            {
+                // make it unmatched
+                board.currentDot.isMatched = false;
+                // decide what kind of bomb to make.
+                int typeOfBomb = Random.Range(0, 100);
+                if (typeOfBomb < 50)
+                {
+                    // Make a row bomb
+                    board.currentDot.MakeRowBomb();
+
+                } else
+                {
+                    // Make a column bomb
+                    board.currentDot.MakeColumnBomb();
+                }
+                
+            } // is the other piece matched?
+            else if (board.currentDot.otherDot != null)
+            {
+                Dot otherDot = board.currentDot.otherDot.GetComponent<Dot>();
+                if (otherDot.isMatched)
+                {
+                    otherDot.isMatched = false;
+                    int typeOfBomb = Random.Range(0, 100);
+                    if (typeOfBomb < 50)
+                    {
+                        // Make a row bomb
+                        otherDot.MakeRowBomb();
+
+                    }
+                    else
+                    {
+                        // Make a column bomb
+                        otherDot.MakeColumnBomb();
+                    }
+                }
+            }
+        }
+    }
+
+    public void MatchesPiecesOfColor(string color)
+    {
+        for (int i = 0; i < board.width; i++)
+        {
+            for (int j = 0; j < board.height; j++)
+            {
+                if (board.allDots[i,j] != null)
+                {
+                    if (board.allDots[i,j].tag == color)
+                    {
+                        board.allDots[i, j].GetComponent<Dot>().isMatched = true;
+                    }
+                }
+            }
+        }
+    }
 }
