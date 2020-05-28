@@ -66,6 +66,20 @@ public class Dot : MonoBehaviour
         arrow.transform.parent = this.transform;
     }
 
+    public void MakeColorBomb()
+    {
+        isColorBomb = true;
+        GameObject color = Instantiate(colorBomb, transform.position, Quaternion.identity);
+        color.transform.parent = this.transform;
+    }
+
+    public void MakeAdjacentBomb()
+    {
+        isAdjacentBomb = true;
+        GameObject adjacent = Instantiate(adjacentBomb, transform.position, Quaternion.identity);
+        adjacent.transform.parent = this.transform;
+    }
+
     // Update is called once per frame
     void Update()
     {
