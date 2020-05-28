@@ -25,9 +25,11 @@ public class Dot : MonoBehaviour
     public bool isColumnBomb;
     public bool isRowBomb;
     public bool isColorBomb;
+    public bool isAdjacentBomb;
     public GameObject columnArrow;
     public GameObject rowArrow;
     public GameObject colorBomb;
+    public GameObject adjacentBomb;
     
     // Start is called before the first frame update
     void Start()
@@ -35,6 +37,7 @@ public class Dot : MonoBehaviour
         isColumnBomb = false;
         isRowBomb = false;
         isColorBomb = false;
+        isAdjacentBomb = false;
         board = FindObjectOfType<Board>(); // there will only ever be one object of type Board.
         findMatches = FindObjectOfType<FindMatches>();
     }
@@ -43,9 +46,9 @@ public class Dot : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            isColorBomb = true;
-            GameObject arrow = Instantiate(colorBomb, transform.position, Quaternion.identity);
-            arrow.transform.parent = this.transform;
+            isAdjacentBomb = true;
+            GameObject marker = Instantiate(adjacentBomb, transform.position, Quaternion.identity);
+            marker.transform.parent = this.transform;
         }
     }
 
