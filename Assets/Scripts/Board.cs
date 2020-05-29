@@ -275,28 +275,6 @@ public class Board : MonoBehaviour
         StartCoroutine(FillBoardCoroutine());
     }
 
-    private IEnumerator DecreaseRowCo()
-    {
-        int nullCount = 0;
-        for (int i = 0; i < width; i++)
-        {
-            for (int j = 0; j < height; j++)
-            {
-                if (allDots[i,j] == null)
-                {
-                    nullCount++;
-                } else if (nullCount > 0)
-                {
-                    allDots[i, j].GetComponent<Dot>().row -= nullCount;
-                    allDots[i, j] = null;
-                }
-            }
-            nullCount = 0;
-        }
-        yield return new WaitForSeconds(0.05f);
-        StartCoroutine(FillBoardCoroutine());
-    }
-
     private void RefillBoard()
     {
         for (int i = 0; i < width; i++)
