@@ -8,6 +8,21 @@ public enum GameState
     move
 }
 
+public enum TileKind
+{
+    Breakable,
+    Blank,
+    Normal
+}
+
+[System.Serializable]
+public class TileType
+{
+    public int x;
+    public int y;
+    public TileKind tileKind;
+}
+
 public class Board : MonoBehaviour
 {
     public GameState currentGameState = GameState.wait;
@@ -18,7 +33,8 @@ public class Board : MonoBehaviour
     public GameObject tilePrefab;
     public GameObject[] dots;
     public GameObject destroyEffect;
-    private BackgroundTile[,] allTiles;
+    public TileType[] boardLayout;
+    private bool[,] blankSpaces;
     public GameObject[,] allDots;
     public Dot currentDot;
     private FindMatches findMatches;
@@ -26,37 +42,52 @@ public class Board : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        allTiles = new BackgroundTile[width, height];
+        blankSpaces = new bool[width, height];
         allDots = new GameObject[width, height];
         findMatches = FindObjectOfType<FindMatches>();
         Setup();
     }
     
+    public void GenerateBlankSpaces()
+    {
+        for (int i = 0; i <boardLayout.Length; i++)
+        {
+            if(boardLayout[i].tileKind == TileKind.Blank)
+            {
+                blankSpaces[boardLayout[i].x, boardLayout[i].y] = true;
+            }
+        }
+    }
+
     private void Setup()
     {
+        GenerateBlankSpaces();
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
-                Vector2 tempPosition = new Vector2(i, j + offset);
-                GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
-                backgroundTile.transform.parent = this.transform; // Parent this backgroundTile GameObject to the Board object (to make it tidy in Hierarchy window)
-                backgroundTile.name = "( " + i + ", " + j + " )"; // Name the tiles with their grid position.
-
-                int dotToUse = Random.Range(0, dots.Length);
-                int maxIterations = 0; // prevent potential inifinite loop. 
-                while (MatchesAt(i, j, dots[dotToUse]) && maxIterations < 100)
+                if (!blankSpaces[i, j])
                 {
-                    dotToUse = Random.Range(0, dots.Length);
-                    maxIterations++;
-                }
+                    Vector2 tempPosition = new Vector2(i, j + offset);
+                    GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
+                    backgroundTile.transform.parent = this.transform; // Parent this backgroundTile GameObject to the Board object (to make it tidy in Hierarchy window)
+                    backgroundTile.name = "( " + i + ", " + j + " )"; // Name the tiles with their grid position.
 
-                GameObject dot = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
-                dot.GetComponent<Dot>().column = i;
-                dot.GetComponent<Dot>().row = j;
-                dot.transform.parent = this.transform;
-                dot.name = "( " + i + ", " + j + " )"; // name dot tile with initial grid position.
-                allDots[i, j] = dot;
+                    int dotToUse = Random.Range(0, dots.Length);
+                    int maxIterations = 0; // prevent potential inifinite loop. 
+                    while (MatchesAt(i, j, dots[dotToUse]) && maxIterations < 100)
+                    {
+                        dotToUse = Random.Range(0, dots.Length);
+                        maxIterations++;
+                    }
+
+                    GameObject dot = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
+                    dot.GetComponent<Dot>().column = i;
+                    dot.GetComponent<Dot>().row = j;
+                    dot.transform.parent = this.transform;
+                    dot.name = "( " + i + ", " + j + " )"; // name dot tile with initial grid position.
+                    allDots[i, j] = dot;
+                }
             }
         }
         currentGameState = GameState.move;
@@ -66,12 +97,13 @@ public class Board : MonoBehaviour
     {
         if (column > 1 && row > 1)
         {
-            if (allDots[column - 1, row].tag == dot.tag && allDots[column - 2, row].tag == dot.tag)
+  
+            if (allDots[column - 1, row]?.tag == dot.tag && allDots[column - 2, row]?.tag == dot.tag)
             {
                 return true;
             }
 
-            if (allDots[column, row - 1].tag == dot.tag && allDots[column, row - 2].tag == dot.tag)
+            if (allDots[column, row - 1]?.tag == dot.tag && allDots[column, row - 2]?.tag == dot.tag)
             {
                 return true;
             }
@@ -79,14 +111,14 @@ public class Board : MonoBehaviour
         {
             if (row > 1)
             {
-                if (allDots[column, row - 1].tag == dot.tag && allDots[column, row - 2].tag == dot.tag)
+                if (allDots[column, row - 1]?.tag == dot.tag && allDots[column, row - 2]?.tag == dot.tag)
                 {
                     return true;
                 }
             }
             if (column > 1)
             {
-                if (allDots[column - 1, row].tag == dot.tag && allDots[column - 2, row].tag == dot.tag)
+                if (allDots[column - 1, row]?.tag == dot.tag && allDots[column - 2, row]?.tag == dot.tag)
                 {
                     return true;
                 }
@@ -217,6 +249,34 @@ public class Board : MonoBehaviour
 
     private IEnumerator DecreaseRowCoroutine()
     {
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                // if current spot isn't blank and is empty
+                if (!blankSpaces[i, j] && allDots[i, j] == null)
+                {
+                    // loop from the space above to the top of the column
+                    for (int k = j + 1; k < height; k++)
+                    {
+                        // if a dot is found
+                        if (allDots[i, k] != null)
+                        {
+                            // move that dot to this empty space
+                            allDots[i, k].GetComponent<Dot>().row = j;
+                            allDots[i, k] = null;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        yield return new WaitForSeconds(0.05f);
+        StartCoroutine(FillBoardCoroutine());
+    }
+
+    private IEnumerator DecreaseRowCo()
+    {
         int nullCount = 0;
         for (int i = 0; i < width; i++)
         {
@@ -243,7 +303,7 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                if (allDots[i,j] == null)
+                if (allDots[i,j] == null && !blankSpaces[i,j])
                 {
                     Vector2 tempPosition = new Vector2(i, j + offset);
                     int dotToUse = Random.Range(0, dots.Length);
