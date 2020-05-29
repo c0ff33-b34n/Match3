@@ -135,7 +135,7 @@ public class Dot : MonoBehaviour
         }
 
         board.currentDot = this;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         if (otherDot != null)
         {
                 
@@ -145,7 +145,7 @@ public class Dot : MonoBehaviour
                 otherDot.GetComponent<Dot>().column = column;
                 row = originalRow;
                 column = originalColumn;
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.05f);
                 board.currentDot = null;
                 board.currentGameState = GameState.move;
             } else
@@ -173,7 +173,6 @@ public class Dot : MonoBehaviour
                 originalRow = row;
                 CalculateAngle();
                 MovePieces();
-                StartCoroutine(CheckMoveCoroutine());
             }
         }
     }
@@ -183,34 +182,36 @@ public class Dot : MonoBehaviour
         swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
     }
 
+    void MoveDots(Vector2 direction)
+    {
+        otherDot = board.allDots[column + (int)direction.x, row + (int)direction.y];
+        otherDot.GetComponent<Dot>().column += -1 * (int)direction.x;
+        otherDot.GetComponent<Dot>().row += -1 * (int)direction.y;
+        column += (int)direction.x;
+        row += (int)direction.y;
+        StartCoroutine(CheckMoveCoroutine());
+    }
+
     void MovePieces()
     {
         if (swipeAngle > -45 && swipeAngle <= 45 && column < board.width - 1)
         {
             // Right swipe
-            otherDot = board.allDots[column + 1, row];
-            otherDot.GetComponent<Dot>().column -=1;
-            column += 1;
+            MoveDots(Vector2.right);
         } else if (swipeAngle > 45 && swipeAngle <= 135 && row < board.height - 1)
         {
             // Up swipe
-            otherDot = board.allDots[column, row + 1];
-            otherDot.GetComponent<Dot>().row -= 1;
-            row += 1;
+            MoveDots(Vector2.up);
         }
         else if ((swipeAngle > 135 || swipeAngle <= -135) && column > 0)
         {
             // Left swipe
-            otherDot = board.allDots[column - 1, row];
-            otherDot.GetComponent<Dot>().column += 1;
-            column -= 1;
+            MoveDots(Vector2.left);
         }
         else if (swipeAngle < -45 && swipeAngle >= -135 && row > 0)
         {
             // Down swipe
-            otherDot = board.allDots[column, row - 1];
-            otherDot.GetComponent<Dot>().row += 1;
-            row -= 1;
+            MoveDots(Vector2.down);
         }
     }
 
