@@ -41,6 +41,7 @@ public class Board : MonoBehaviour
     public GameObject[,] allDots;
     public Dot currentDot;
     private FindMatches findMatches;
+    private HintManager hintManager;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +50,7 @@ public class Board : MonoBehaviour
         breakableTiles = new BackgroundTile[width, height];
         allDots = new GameObject[width, height];
         findMatches = FindObjectOfType<FindMatches>();
+        hintManager = FindObjectOfType<HintManager>();
         Setup();
     }
 
@@ -254,6 +256,10 @@ public class Board : MonoBehaviour
                 }
             }
 
+            if (hintManager != null)
+            {
+                hintManager.DestroyHint();
+            }
             GameObject particle = Instantiate(destroyEffect, allDots[column, row].transform.position, Quaternion.identity);
             Destroy(particle, destroyParticleAfterNSeconds);
             Destroy(allDots[column, row]);
@@ -413,7 +419,7 @@ public class Board : MonoBehaviour
         return false;
     }
 
-    private bool SwitchAndCheck(int column, int row, Vector2 direction)
+    public bool SwitchAndCheck(int column, int row, Vector2 direction)
     {
         SwitchPieces(column, row, direction);
         if (CheckForMatches())
