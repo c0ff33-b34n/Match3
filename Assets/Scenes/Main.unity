@@ -314,6 +314,8 @@ MonoBehaviour:
   destroyParticleAfterNSeconds: 0.4
   tilePrefab: {fileID: 2776069864031227952, guid: 33aace0675969e8408f4d295fa328524,
     type: 3}
+  breakableTilePrefab: {fileID: 446069863046880180, guid: 94b06a48bce50cc4c8e39318ef65be9e,
+    type: 3}
   dots:
   - {fileID: 5338190463504582413, guid: 7b399682132572748b53a7f640d93178, type: 3}
   - {fileID: 4931611011505668678, guid: 17e899a3d6444974882c9520e5a4514c, type: 3}
@@ -344,4 +346,13 @@ MonoBehaviour:
   - x: 5
     y: 4
     tileKind: 1
+  - x: 1
+    y: 5
+    tileKind: 0
+  - x: 1
+    y: 6
+    tileKind: 0
+  - x: 1
+    y: 7
+    tileKind: 0
   currentDot: {fileID: 0}
