@@ -43,6 +43,10 @@ public class Board : MonoBehaviour
     public Dot currentDot;
     private FindMatches findMatches;
     private HintManager hintManager;
+    private ScoreManager scoreManager;
+
+    public int defaultScoreValue = 20;
+    private int streakValue = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +56,7 @@ public class Board : MonoBehaviour
         allDots = new GameObject[width, height];
         findMatches = FindObjectOfType<FindMatches>();
         hintManager = FindObjectOfType<HintManager>();
+        scoreManager = FindObjectOfType<ScoreManager>();
         Setup();
     }
 
@@ -265,6 +270,7 @@ public class Board : MonoBehaviour
             GameObject particle = Instantiate(destroyEffect, allDots[column, row].transform.position, Quaternion.identity);
             Destroy(particle, destroyParticleAfterNSeconds);
             Destroy(allDots[column, row]);
+            scoreManager.IncreaseScore(defaultScoreValue * streakValue);
             allDots[column, row] = null;
         }
     }
@@ -357,6 +363,7 @@ public class Board : MonoBehaviour
 
         while (MatchesOnBoard())
         {
+            streakValue += 1;
             yield return new WaitForSeconds(0.2f);
             DestroyMatches();
         }
@@ -371,6 +378,7 @@ public class Board : MonoBehaviour
         }
 
         currentGameState = GameState.move;
+        streakValue = 1;
     }
 
     private void SwitchPieces(int column, int row, Vector2 direction)
