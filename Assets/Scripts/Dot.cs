@@ -135,7 +135,7 @@ public class Dot : MonoBehaviour
         }
 
         board.currentDot = this;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(board.refillDelay);
         if (otherDot != null)
         {
                 
@@ -145,7 +145,7 @@ public class Dot : MonoBehaviour
                 otherDot.GetComponent<Dot>().column = column;
                 row = originalRow;
                 column = originalColumn;
-                yield return new WaitForSeconds(0.05f);
+                yield return new WaitForSeconds(board.refillDelay);
                 board.currentDot = null;
                 board.currentGameState = GameState.move;
             } else
