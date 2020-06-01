@@ -48,6 +48,7 @@ public class Board : MonoBehaviour
     public int defaultScoreValue = 20;
     private int streakValue = 1;
     public float refillDelay = 0.5f;
+    public int[] scoreGoals;
 
     // Start is called before the first frame update
     void Start()
