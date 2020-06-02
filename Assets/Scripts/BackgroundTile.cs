@@ -7,10 +7,12 @@ public class BackgroundTile : MonoBehaviour
     public int hitPoints;
 
     private SpriteRenderer sprite;
+    private GoalManager goalManager;
 
     private void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
+        goalManager = GetComponent<GoalManager>();
     }
 
     public void TakeDamage(int damage)
@@ -21,6 +23,11 @@ public class BackgroundTile : MonoBehaviour
 
         if (hitPoints <= 0)
         {
+            if (goalManager != null)
+            {
+                goalManager.CompareGoal(this.gameObject.tag);
+                goalManager.UpdateGoals();
+            }
             Destroy(this.gameObject);
         }
     }

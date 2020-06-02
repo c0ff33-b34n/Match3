@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2207585157535986677}
   m_Layer: 0
   m_Name: Purple Candy
-  m_TagString: Dark Green Dot
+  m_TagString: Purple Candy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

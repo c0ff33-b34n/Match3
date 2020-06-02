@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: -2486660050206170238}
   - component: {fileID: -2575802507384723035}
   m_Layer: 0
-  m_Name: Yellow Dot
-  m_TagString: Yellow Dot
+  m_Name: Yellow Candy
+  m_TagString: Yellow Candy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

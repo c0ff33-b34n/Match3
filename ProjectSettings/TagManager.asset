@@ -4,15 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Dark Green Dot
-  - Green Dot
-  - Indigo Dot
-  - Orange Dot
-  - Red Dot
-  - Salmon Dot
-  - Teal Dot
-  - Yellow Dot
   - Color
+  - Blue Candy
+  - Green Candy
+  - Orange Candy
+  - Red Candy
+  - Yellow Candy
+  - Purple Candy
   layers:
   - Default
   - TransparentFX

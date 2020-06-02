@@ -45,6 +45,7 @@ public class Board : MonoBehaviour
     private HintManager hintManager;
     private ScoreManager scoreManager;
     private SoundManager soundManager;
+    private GoalManager goalManager;
 
     public int defaultScoreValue = 20;
     private int streakValue = 1;
@@ -61,6 +62,7 @@ public class Board : MonoBehaviour
         hintManager = FindObjectOfType<HintManager>();
         scoreManager = FindObjectOfType<ScoreManager>();
         soundManager = FindObjectOfType<SoundManager>();
+        goalManager = FindObjectOfType<GoalManager>();
         Setup();
     }
 
@@ -265,6 +267,12 @@ public class Board : MonoBehaviour
                 {
                     breakableTiles[column, row] = null;
                 }
+            }
+
+            if (goalManager != null)
+            {
+                goalManager.CompareGoal(allDots[column, row].tag.ToString());
+                goalManager.UpdateGoals();
             }
 
             if (hintManager != null)

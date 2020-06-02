@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: -8193401712751778071}
   - component: {fileID: -3434801995504812735}
   m_Layer: 0
-  m_Name: Indigo Dot
-  m_TagString: Indigo Dot
+  m_Name: Blue Candy
+  m_TagString: Blue Candy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
