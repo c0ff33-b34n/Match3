@@ -44,6 +44,7 @@ public class Board : MonoBehaviour
     private FindMatches findMatches;
     private HintManager hintManager;
     private ScoreManager scoreManager;
+    private SoundManager soundManager;
 
     public int defaultScoreValue = 20;
     private int streakValue = 1;
@@ -59,6 +60,7 @@ public class Board : MonoBehaviour
         findMatches = FindObjectOfType<FindMatches>();
         hintManager = FindObjectOfType<HintManager>();
         scoreManager = FindObjectOfType<ScoreManager>();
+        soundManager = FindObjectOfType<SoundManager>();
         Setup();
     }
 
@@ -269,6 +271,12 @@ public class Board : MonoBehaviour
             {
                 hintManager.DestroyHint();
             }
+
+            if (soundManager != null)
+            {
+                soundManager.PlayRandomDestroyNoise();
+            }
+
             GameObject particle = Instantiate(destroyEffect, allDots[column, row].transform.position, Quaternion.identity);
             Destroy(particle, destroyParticleAfterNSeconds);
             Destroy(allDots[column, row]);
