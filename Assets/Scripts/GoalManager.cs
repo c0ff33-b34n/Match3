@@ -18,11 +18,13 @@ public class GoalManager : MonoBehaviour
     public GameObject goalPrefab;
     public GameObject goalIntroParent;
     public GameObject goalGameParent;
+    private EndGameManager endGameManager;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        endGameManager = FindObjectOfType<EndGameManager>();
         SetupGoals();
     }
 
@@ -60,8 +62,12 @@ public class GoalManager : MonoBehaviour
                 currentGoals[i].thisText.text = "" + levelGoals[i].numberNeeded + "/" + levelGoals[i].numberNeeded;
             }
         }
-        if (goalsCompleted >-levelGoals.Length)
+        if (goalsCompleted >= levelGoals.Length)
         {
+            if (endGameManager != null)
+            {
+                endGameManager.WinGame();
+            }
             Debug.Log("You win!");
         }
     }

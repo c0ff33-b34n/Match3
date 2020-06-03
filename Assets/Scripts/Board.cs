@@ -7,7 +7,10 @@ using UnityEngine;
 public enum GameState
 {
     wait,
-    move
+    move,
+    win,
+    lose,
+    pause
 }
 
 public enum TileKind
@@ -63,6 +66,7 @@ public class Board : MonoBehaviour
         scoreManager = FindObjectOfType<ScoreManager>();
         soundManager = FindObjectOfType<SoundManager>();
         goalManager = FindObjectOfType<GoalManager>();
+        currentGameState = GameState.pause;
         Setup();
     }
 
@@ -123,7 +127,7 @@ public class Board : MonoBehaviour
                 }
             }
         }
-        currentGameState = GameState.move;
+//        currentGameState = GameState.move;
     }
 
     private bool MatchesAt(int column, int row, GameObject dot)
