@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba49c25580a2f9a418b510ce81016b90, type: 3}
+  m_Name: Level 2
+  m_EditorClassIdentifier: 
+  width: 6
+  height: 8
+  boardLayout: []
+  dots:
+  - {fileID: 956093317077193398, guid: 1d41e42155167a34185aeb656dd6c95b, type: 3}
+  - {fileID: 4931611011505668678, guid: 17e899a3d6444974882c9520e5a4514c, type: 3}
+  - {fileID: 6317686841373673560, guid: c096fcf4b26087c4db4178646a59f38a, type: 3}
+  - {fileID: 5338190463504582413, guid: 7b399682132572748b53a7f640d93178, type: 3}
+  - {fileID: 9006979215345568394, guid: a931c66cf0c669e45925d80886f7d9f2, type: 3}
+  scoreGoals: f4010000e8030000d0070000
+  endGameRequirements:
+    gameType: 1
+    counterValue: 100
+  levelGoals:
+  - numberNeeded: 3
+    numberCollected: 0
+    goalSprite: {fileID: 21300000, guid: 4b7b260cd96ca8d419b36cfaa01fecbf, type: 3}
+    matchValue: Blue Candy
+  - numberNeeded: 3
+    numberCollected: 0
+    goalSprite: {fileID: 21300000, guid: 34bfbf0b5407ffc4082cd431e1d7b42b, type: 3}
+    matchValue: Red Candy

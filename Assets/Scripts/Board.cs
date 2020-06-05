@@ -1,7 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq.Expressions;
 using UnityEngine;
 
 public enum GameState
@@ -30,15 +28,23 @@ public class TileType
 
 public class Board : MonoBehaviour
 {
+    [Header ("Scriptable Objects")]
+    public World world;
+    public int level;
+
     public GameState currentGameState = GameState.wait;
+    [Header ("Board Dimensions")]
     public int width;
     public int height;
     public int offset;
-    public float destroyParticleAfterNSeconds = 0.4f;
+
+    [Header ("Prefabs")]
     public GameObject tilePrefab;
     public GameObject breakableTilePrefab;
     public GameObject[] dots;
     public GameObject destroyEffect;
+
+    [Header ("Layout")]
     public TileType[] boardLayout;
     private bool[,] blankSpaces;
     private BackgroundTile[,] breakableTiles;
@@ -53,7 +59,26 @@ public class Board : MonoBehaviour
     public int defaultScoreValue = 20;
     private int streakValue = 1;
     public float refillDelay = 0.5f;
+    public float destroyParticleAfterNSeconds = 0.4f;
     public int[] scoreGoals;
+
+    private void Awake()
+    {
+        if (world != null)
+        {
+            if (level < world.levels.Length)
+            {
+                if (world.levels[level] != null)
+                {
+                    width = world.levels[level].width;
+                    height = world.levels[level].height;
+                    dots = world.levels[level].dots;
+                    scoreGoals = world.levels[level].scoreGoals;
+                    boardLayout = world.levels[level].boardLayout;
+                }
+            }
+        }
+    }
 
     // Start is called before the first frame update
     void Start()

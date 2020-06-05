@@ -3250,11 +3250,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99e90518f6037324d886258d30c2f241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  world: {fileID: 11400000, guid: 66169ab3474cbe84ab353f93de857549, type: 2}
+  level: 2
   currentGameState: 0
   width: 7
   height: 10
   offset: 20
-  destroyParticleAfterNSeconds: 0.4
   tilePrefab: {fileID: 2776069864031227952, guid: 33aace0675969e8408f4d295fa328524,
     type: 3}
   breakableTilePrefab: {fileID: 446069863046880180, guid: 94b06a48bce50cc4c8e39318ef65be9e,
@@ -3268,37 +3269,11 @@ MonoBehaviour:
   - {fileID: 7204731248025574896, guid: f25f364f455cad440b24906bb799fc56, type: 3}
   destroyEffect: {fileID: 7857476130259785411, guid: f9b8b0f529ee38642a4c5dd6e15669c0,
     type: 3}
-  boardLayout:
-  - x: 0
-    y: 0
-    tileKind: 1
-  - x: 6
-    y: 9
-    tileKind: 1
-  - x: 6
-    y: 0
-    tileKind: 1
-  - x: 0
-    y: 9
-    tileKind: 1
-  - x: 4
-    y: 4
-    tileKind: 1
-  - x: 5
-    y: 4
-    tileKind: 1
-  - x: 1
-    y: 5
-    tileKind: 0
-  - x: 1
-    y: 6
-    tileKind: 0
-  - x: 1
-    y: 7
-    tileKind: 0
+  boardLayout: []
   currentDot: {fileID: 0}
   defaultScoreValue: 20
   refillDelay: 0.5
+  destroyParticleAfterNSeconds: 0.4
   scoreGoals: d0070000a00f000088130000
 --- !u!114 &2100267865
 MonoBehaviour:
