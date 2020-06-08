@@ -26,6 +26,6 @@ MonoBehaviour:
     counterValue: 10
   levelGoals:
   - numberNeeded: 5
-    numberCollected: 11
+    numberCollected: 0
     goalSprite: {fileID: 21300000, guid: baaf00e8b8932e14f8dcdd0abcd4d67e, type: 3}
     matchValue: Yellow Candy
