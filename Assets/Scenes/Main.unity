@@ -3251,7 +3251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   world: {fileID: 11400000, guid: 66169ab3474cbe84ab353f93de857549, type: 2}
-  level: 2
+  level: 1
   currentGameState: 0
   width: 7
   height: 10
