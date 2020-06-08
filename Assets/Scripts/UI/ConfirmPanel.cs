@@ -7,6 +7,7 @@ public class ConfirmPanel : MonoBehaviour
     public string levelToLoad;
     public Image[] stars;
     public int level;
+    private GoalManager goalManager;
 
     public void Cancel()
     {
@@ -21,7 +22,9 @@ public class ConfirmPanel : MonoBehaviour
 
     void Start()
     {
-        SetStars();    
+        goalManager = GetComponent<GoalManager>();
+        SetStars();
+        ResetNumberCollected();
     }
 
     void SetStars()
@@ -30,6 +33,14 @@ public class ConfirmPanel : MonoBehaviour
         for (int i = 0; i < stars.Length; i++)
         {
             stars[i].enabled = false;
+        }
+    }
+
+    void ResetNumberCollected()
+    {
+        if (goalManager != null)
+        {
+            goalManager.ResetGoals();
         }
     }
 }
