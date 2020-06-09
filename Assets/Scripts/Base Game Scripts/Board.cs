@@ -416,8 +416,8 @@ public class Board : MonoBehaviour
 
     private IEnumerator FillBoardCoroutine()
     {
-        RefillBoard();
         yield return new WaitForSeconds(refillDelay);
+        RefillBoard();
 
         while (MatchesOnBoard())
         {

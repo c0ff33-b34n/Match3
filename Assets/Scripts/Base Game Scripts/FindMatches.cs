@@ -210,7 +210,7 @@ public class FindMatches : MonoBehaviour
             if (board.allDots[i, row] != null)
             {
                 Dot dot = board.allDots[i, row].GetComponent<Dot>();
-                if (dot.isRowBomb)
+                if (dot.isColumnBomb)
                 {
                     dots.Union(GetColumnPieces(i)).ToList();
                 }
