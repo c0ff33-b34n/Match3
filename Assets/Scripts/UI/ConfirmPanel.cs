@@ -6,8 +6,13 @@ public class ConfirmPanel : MonoBehaviour
 {
     public string levelToLoad;
     public Image[] stars;
+    public Text highScoreText;
+    public Text starText;
     public int level;
+    private int starsActive;
+    private int highScore;
     private GoalManager goalManager;
+    private GameData gameData;
 
     public void Cancel()
     {
@@ -20,19 +25,36 @@ public class ConfirmPanel : MonoBehaviour
         SceneManager.LoadScene(levelToLoad);
     }
 
-    void Start()
+    void OnEnable()
     {
+        gameData = FindObjectOfType<GameData>();
         goalManager = GetComponent<GoalManager>();
+        LoadData();
         SetStars();
+        SetText();
         ResetNumberCollected();
+    }
+
+    void LoadData()
+    {
+        if (gameData != null)
+        {
+            starsActive = gameData.saveData.stars[level - 1];
+            highScore = gameData.saveData.highScores[level - 1];
+        }
+    }
+
+    void SetText()
+    {
+        highScoreText.text = "" + highScore;
+        starText.text = "" + starsActive + "/3";
     }
 
     void SetStars()
     {
-        // Remove filled stars.
-        for (int i = 0; i < stars.Length; i++)
+        for (int i = 0; i < starsActive; i++)
         {
-            stars[i].enabled = false;
+            stars[i].enabled = true;
         }
     }
 

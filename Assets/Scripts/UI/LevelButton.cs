@@ -8,19 +8,41 @@ public class LevelButton : MonoBehaviour
     public Sprite lockedSprite;
     private Image buttonImage;
     private Button levelButton;
+    private int starsActive;
 
     public Image[] stars;
     public Text levelText;
     public int level;
     public GameObject confirmPanel;
 
+    private GameData gameData;
     void Start()
     {
         buttonImage = GetComponent<Image>();
         levelButton = GetComponent<Button>();
+        gameData = FindObjectOfType<GameData>();
+        LoadData();
         SetStars();
         ShowLevel();
         SetButtonSprite();
+    }
+
+    void LoadData()
+    {
+        Debug.Log("LevelButton Script, LoadData() Called");
+        if (gameData != null)
+        {
+            Debug.Log("Level button script, gameData is not null in LoadData");
+            if (gameData.saveData.isActive[level - 1])
+            {
+                isActive = true;
+            } else
+            {
+                isActive = false;
+            }
+            starsActive = gameData.saveData.stars[level - 1];
+
+        }
     }
 
     void SetButtonSprite()
@@ -40,10 +62,9 @@ public class LevelButton : MonoBehaviour
 
     void SetStars()
     {
-        // Remove filled stars.
-        for (int i = 0; i < stars.Length; i++)
+        for (int i = 0; i < starsActive; i++)
         {
-            stars[i].enabled = false;
+            stars[i].enabled = true;
         }
     }
 
