@@ -34,9 +34,4 @@ public class CameraScaler : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

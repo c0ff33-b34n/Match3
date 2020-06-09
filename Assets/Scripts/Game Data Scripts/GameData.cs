@@ -59,19 +59,9 @@ public class GameData : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-      
-    }
-
     private void OnDisable()
     {
         Save();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

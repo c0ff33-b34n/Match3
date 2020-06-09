@@ -29,9 +29,4 @@ public class BackToSplash : MonoBehaviour
         board = FindObjectOfType<Board>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

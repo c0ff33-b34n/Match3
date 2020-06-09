@@ -157,7 +157,6 @@ public class Board : MonoBehaviour
                 }
             }
         }
-//        currentGameState = GameState.move;
     }
 
     private bool MatchesAt(int column, int row, GameObject dot)
